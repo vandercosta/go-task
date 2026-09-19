@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ModalControllerService } from '../../services/modal-controller.service';
 
 @Component({
   selector: 'app-welcome-section',
   templateUrl: './welcome-section.component.html',
-  styleUrls: ['./welcome-section.component.css']
+  styleUrls: ['./welcome-section.component.css'],
 })
-export class WelcomeSectionComponent implements OnInit {
+export class WelcomeSectionComponent {
+  private readonly _modalControllerService = inject(ModalControllerService);
 
-  constructor() { }
+  openNewTaskModal() {
+    const dialogRef = this._modalControllerService.openNewTaskModal();
 
-  ngOnInit() {
+    dialogRef.closed.subscribe((taskForm) => {
+      if (taskForm) {
+        console.log('Task form:', taskForm);
+      }
+    });
   }
-
 }
