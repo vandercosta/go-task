@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TaskCardComponent } from '../task-card/task-card.component';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-task-list-section',
@@ -8,7 +9,11 @@ import { TaskCardComponent } from '../task-card/task-card.component';
   imports: [TaskCardComponent],
 })
 export class TaskListSectionComponent implements OnInit {
-  constructor() {}
+  private readonly _taskService = inject(TaskService);
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._taskService.todoTasks.subscribe((tasks) => {
+      console.log('Tarefas em A fazer:', tasks);
+    });
+  }
 }
